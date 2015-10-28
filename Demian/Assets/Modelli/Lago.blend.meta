@@ -1,0 +1,178 @@
+fileFormatVersion: 2
+guid: d63717432fa628349ac40f756839328e
+timeCreated: 1445966826
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Plane_577
+    100004: Plane_578
+    100006: Plane_579
+    100008: Plane_580
+    100010: Plane_581
+    100012: Plane_582
+    100014: Plane_583
+    100016: Plane_584
+    100018: Plane_585
+    100020: Plane_586
+    100022: Plane_587
+    100024: Plane_588
+    100026: Plane_589
+    100028: Plane_590
+    100030: Plane_591
+    100032: Plane_592
+    100034: Plane_593
+    100036: Plane_594
+    100038: Plane_595
+    100040: Plane_596
+    100042: Plane_597
+    400000: //RootNode
+    400002: Plane_577
+    400004: Plane_578
+    400006: Plane_579
+    400008: Plane_580
+    400010: Plane_581
+    400012: Plane_582
+    400014: Plane_583
+    400016: Plane_584
+    400018: Plane_585
+    400020: Plane_586
+    400022: Plane_587
+    400024: Plane_588
+    400026: Plane_589
+    400028: Plane_590
+    400030: Plane_591
+    400032: Plane_592
+    400034: Plane_593
+    400036: Plane_594
+    400038: Plane_595
+    400040: Plane_596
+    400042: Plane_597
+    2300000: Plane_577
+    2300002: Plane_578
+    2300004: Plane_579
+    2300006: Plane_580
+    2300008: Plane_581
+    2300010: Plane_582
+    2300012: Plane_583
+    2300014: Plane_584
+    2300016: Plane_585
+    2300018: Plane_586
+    2300020: Plane_587
+    2300022: Plane_588
+    2300024: Plane_589
+    2300026: Plane_590
+    2300028: Plane_591
+    2300030: Plane_592
+    2300032: Plane_593
+    2300034: Plane_594
+    2300036: Plane_595
+    2300038: Plane_596
+    2300040: Plane_597
+    3300000: Plane_577
+    3300002: Plane_578
+    3300004: Plane_579
+    3300006: Plane_580
+    3300008: Plane_581
+    3300010: Plane_582
+    3300012: Plane_583
+    3300014: Plane_584
+    3300016: Plane_585
+    3300018: Plane_586
+    3300020: Plane_587
+    3300022: Plane_588
+    3300024: Plane_589
+    3300026: Plane_590
+    3300028: Plane_591
+    3300030: Plane_592
+    3300032: Plane_593
+    3300034: Plane_594
+    3300036: Plane_595
+    3300038: Plane_596
+    3300040: Plane_597
+    4300000: Plane_577
+    4300002: Plane_578
+    4300004: Plane_579
+    4300006: Plane_580
+    4300008: Plane_581
+    4300010: Plane_582
+    4300012: Plane_583
+    4300014: Plane_584
+    4300016: Plane_585
+    4300018: Plane_586
+    4300020: Plane_587
+    4300022: Plane_588
+    4300024: Plane_589
+    4300026: Plane_590
+    4300028: Plane_591
+    4300030: Plane_592
+    4300032: Plane_593
+    4300034: Plane_594
+    4300036: Plane_595
+    4300038: Plane_596
+    4300040: Plane_597
+    7400000: Default Take
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 6
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

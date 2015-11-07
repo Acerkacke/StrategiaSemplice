@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 [System.Serializable]
-public abstract class Risorsa {
-
+public enum Risorsa{
+		Legno,
+		Roccia,
+		Ferro,
+		Oro,
+		Grano,
+		Cibo,
+		ErbeMedicinali
 }

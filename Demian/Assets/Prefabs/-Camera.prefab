@@ -105,7 +105,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8baec46cb4c4b44c91798e6c01ce608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Menu: {fileID: 127220, guid: 59265d15c8c37af4a883ee11a7cd5d02, type: 2}
+  MenuBosco: {fileID: 127220, guid: 59265d15c8c37af4a883ee11a7cd5d02, type: 2}
+  MenuMontagna: {fileID: 168030, guid: 859d7e82209a0c04c81238343122a5b3, type: 2}
+  MenuLago: {fileID: 0}
 --- !u!114 &11461806
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -137,8 +139,6 @@ MonoBehaviour:
   Cibo: 0
   Grano: 0
   ErbeMedicinali: 0
-  Acqua: 0
-  CittadiniLiberi: 0
 --- !u!124 &12419850
 Behaviour:
   m_ObjectHideFlags: 1

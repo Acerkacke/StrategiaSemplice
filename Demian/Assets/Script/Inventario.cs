@@ -11,8 +11,6 @@ public class Inventario : MonoBehaviour {
 	public float Cibo;
 	public float Grano;
 	public float ErbeMedicinali;
-	public float Acqua;
-	public float CittadiniLiberi;
 
 	private float LegnoAlSec;
 	private float RocciaAlSec;
@@ -21,27 +19,34 @@ public class Inventario : MonoBehaviour {
 	private float CiboAlSec;
 	private float GranoAlSec;
 	private float ErbeMedicinaliAlSec;
-	private float AcquaAlSec;
-	private float CittadiniLiberiAlSec;
 
 	private float ogniQuantoRaccolta = 1;
 	private float proxRaccolta;
 	private float ogniQuantoControllo = 20.2f;
 	private float proxControllo;
 	private MatriceBlocchi matrice;
+	private GestioneGioco GG;
+	private float tempoUltimoFrame;
 	void Start () {
-		matrice = GameObject.FindObjectOfType<MatriceBlocchi>();
+		//IF CARICA ELSE = 0;
+		matrice = GetComponent<MatriceBlocchi>();
+		GG = GetComponent<GestioneGioco>();
+		GG.gameTime += Time.time;
+		//proxContGetComponent<MatriceBlocchi>();rollo = Time.time + ogniQuantoControllo;
 		proxRaccolta = Time.time + ogniQuantoRaccolta;
-		CaricaRisorse();
+		tempoUltimoFrame = Time.time;
+		Carica ();
 	}
 
 	void FixedUpdate(){
-		if(Time.time >= proxRaccolta){
-			proxRaccolta = Time.time + ogniQuantoRaccolta;
+		GG.gameTime += (Time.time - tempoUltimoFrame) * GG.timeScale;
+		tempoUltimoFrame = Time.time;
+		if(GG.gameTime >= proxRaccolta){
+			proxRaccolta = GG.gameTime + ogniQuantoRaccolta;
 			Raccogli();
 		}
-		if(Time.time >= proxControllo){
-			proxControllo = Time.time + ogniQuantoControllo;
+		if(GG.gameTime >= proxControllo){
+			proxControllo = GG.gameTime + ogniQuantoControllo;
 			Controlla();
 		}
 	}
@@ -54,56 +59,72 @@ public class Inventario : MonoBehaviour {
 		Cibo += CiboAlSec;
 		Grano += GranoAlSec;
 		ErbeMedicinali += ErbeMedicinaliAlSec;
-		Acqua += AcquaAlSec;
-		CittadiniLiberi += CittadiniLiberiAlSec;
-		SalvaRisorse();
+		Salva ();
 	}
 
 	public void Controlla(){
 		SvuotaAlSec();
 		for(int i=0;i<50;i++){
 			for(int j=0;j<50;j++){
+				//se il questo blocco c'è un colonizzato
 				if(matrice.blocchi[i,j].colonizzato != null){
-					foreach(ReN ren in matrice.blocchi[i,j].naturale.risorse){
-						Aggiungi(ren.risorsa.ToString(), ren.quantoAlSecondo);
-
+					//se produce qualcosa
+					if(matrice.blocchi[i,j].risorse.Length > 0){
+						//per ogni risorsa nel blocco naturale aggiungo quanto produce
+						//Debug.Log(matrice.blocchi[i,j].risorse[0] + " con dentro " + matrice.blocchi[i,j].colonizzato.cittadiniCheCiLavorano + " uomini");
+						foreach(ReN ren in matrice.blocchi[i,j].risorse){
+							//Per ogni cittadino che ci lavora dentro aggiungo risorsa al secondo
+							for(int f=0;f<matrice.blocchi[i,j].colonizzato.cittadiniCheCiLavorano;f++){
+								Aggiungi(ren.risorsa, ren.numero);
+							}
+						}
 					}
 				}
 			}
 		}
 	}
 
-	public void Aggiungi(string cosa,float quanto){
+	public void Controlla(int i,int j){
+		if(matrice.blocchi[i,j].colonizzato != null){
+			//se produce qualcosa
+			if(matrice.blocchi[i,j].risorse.Length > 0){
+				//per ogni risorsa nel blocco naturale aggiungo quanto produce
+				foreach(ReN ren in matrice.blocchi[i,j].risorse){
+					//Per ogni cittadino che ci lavora dentro aggiungo risorsa al secondo
+					for(int f=0;f<matrice.blocchi[i,j].colonizzato.cittadiniCheCiLavorano;f++){
+						Aggiungi(ren.risorsa, ren.numero);
+					}
+				}
+			}
+		}
+	}
+	
+	private void Aggiungi(Risorsa cosa,float quanto){
 		switch(cosa){
-		case "Legno":
+		case Risorsa.Legno:
 			LegnoAlSec+=quanto;
 			break;
-		case "Roccia":
+		case Risorsa.Roccia:
 			RocciaAlSec+=quanto;
 			break;
-		case "Ferro":
+		case Risorsa.Ferro:
 			FerroAlSec+=quanto;
 			break;
-		case "Oro":
+		case Risorsa.Oro:
 			OroAlSec+=quanto;
 			break;
-		case "Cibo":
+		case Risorsa.Cibo:
 			CiboAlSec+=quanto;
 			break;
-		case "Grano":
+		case Risorsa.Grano:
 			GranoAlSec+=quanto;
 			break;
-		case "ErbeMedicinali":
+		case Risorsa.ErbeMedicinali:
 			ErbeMedicinaliAlSec+=quanto;
-			break;
-		case "Acqua":
-			AcquaAlSec+=quanto;
-			break;
-		case "CittadiniLiberi":
-			CittadiniLiberiAlSec+=quanto;
 			break;
 		}
 	}
+
 	void SvuotaAlSec(){
 		LegnoAlSec = 0;
 		RocciaAlSec = 0;
@@ -112,31 +133,81 @@ public class Inventario : MonoBehaviour {
 		CiboAlSec = 0;
 		GranoAlSec = 0;
 		ErbeMedicinaliAlSec = 0;
-		AcquaAlSec = 0;
-		CittadiniLiberiAlSec = 0;
 	}
 
-	void CaricaRisorse(){
-		Legno = PlayerPrefs.GetFloat("Inventario" + matrice.numeroSalvataggio + "Legno");
-		Roccia = PlayerPrefs.GetFloat("Inventario" + matrice.numeroSalvataggio + "Roccia");
-		Ferro = PlayerPrefs.GetFloat("Inventario" + matrice.numeroSalvataggio + "Ferro");
-		Oro = PlayerPrefs.GetFloat("Inventario" + matrice.numeroSalvataggio + "Oro");
-		Cibo = PlayerPrefs.GetFloat("Inventario" + matrice.numeroSalvataggio + "Cibo");
-		Grano = PlayerPrefs.GetFloat("Inventario" + matrice.numeroSalvataggio + "Grano");
-		ErbeMedicinali = PlayerPrefs.GetFloat("Inventario" + matrice.numeroSalvataggio + "ErbeMedicinali");
-		Acqua = PlayerPrefs.GetFloat("Inventario" + matrice.numeroSalvataggio + "Acqua");
-		CittadiniLiberi = PlayerPrefs.GetFloat("Inventario" + matrice.numeroSalvataggio + "CittadiniLiberi");
+	public void Togli(Risorsa cosa,float quanto){
+		switch(cosa){
+		case Risorsa.Legno:
+			if(Legno-quanto >= 0){
+				Legno-=quanto;
+			}else{
+				Debug.LogError("NON HAI ABBASTANZA MATERIALI");
+			}
+			break;
+		case Risorsa.Roccia:
+			if(Roccia-quanto >= 0){
+				Roccia-=quanto;
+			}else{
+				Debug.LogError("NON HAI ABBASTANZA MATERIALI");
+			}
+			break;
+		case Risorsa.Ferro:
+			if(Ferro-quanto >= 0){
+				Ferro-=quanto;
+			}else{
+				Debug.LogError("NON HAI ABBASTANZA MATERIALI");
+			}
+			break;
+		case Risorsa.Oro:
+			if(Oro-quanto >= 0){
+				Oro-=quanto;
+			}else{
+				Debug.LogError("NON HAI ABBASTANZA MATERIALI");
+			}
+			break;
+		case Risorsa.Cibo:
+			if(Cibo-quanto >= 0){
+				Cibo-=quanto;
+			}else{
+				Debug.LogError("NON HAI ABBASTANZA MATERIALI");
+			}
+			break;
+		case Risorsa.Grano:
+			if(Grano-quanto >= 0){
+				Grano-=quanto;
+			}else{
+				Debug.LogError("NON HAI ABBASTANZA MATERIALI");
+			}
+			break;
+		case Risorsa.ErbeMedicinali:
+			if(ErbeMedicinali-quanto >= 0){
+				ErbeMedicinali-=quanto;
+			}else{
+				Debug.LogError("NON HAI ABBASTANZA MATERIALI");
+			}
+			break;
+		}
 	}
 
-	void SalvaRisorse(){
-		PlayerPrefs.SetFloat("Inventario" + matrice.numeroSalvataggio + "Legno",Legno);
-		PlayerPrefs.SetFloat("Inventario" + matrice.numeroSalvataggio + "Roccia",Roccia);
-		PlayerPrefs.SetFloat("Inventario" + matrice.numeroSalvataggio + "Ferro",Ferro);
-		PlayerPrefs.SetFloat("Inventario" + matrice.numeroSalvataggio + "Oro",Oro);
-		PlayerPrefs.SetFloat("Inventario" + matrice.numeroSalvataggio + "Cibo",Cibo);
-		PlayerPrefs.SetFloat("Inventario" + matrice.numeroSalvataggio + "Grano",Grano);
-		PlayerPrefs.SetFloat("Inventario" + matrice.numeroSalvataggio + "ErbeMedicinali",ErbeMedicinali);
-		PlayerPrefs.SetFloat("Inventario" + matrice.numeroSalvataggio + "Acqua",Acqua);
-		PlayerPrefs.SetFloat("Inventario" + matrice.numeroSalvataggio + "CittadiniLiberi",CittadiniLiberi);
+	void Salva(){
+		int salvat = PlayerPrefs.GetInt("NumeroSalvataggioCorrente");;
+		PlayerPrefs.SetFloat ("Risorse" + salvat + "Legno",Legno);
+		PlayerPrefs.SetFloat ("Risorse" + salvat + "Roccia",Roccia);
+		PlayerPrefs.SetFloat ("Risorse" + salvat + "Ferro",Ferro);
+		PlayerPrefs.SetFloat ("Risorse" + salvat + "Oro",Oro);
+		PlayerPrefs.SetFloat ("Risorse" + salvat + "Cibo",Cibo);
+		PlayerPrefs.SetFloat ("Risorse" + salvat + "Grano",Grano);
+		PlayerPrefs.SetFloat ("Risorse" + salvat + "ErbeMedicinali",ErbeMedicinali);
+	}
+
+	void Carica(){
+		int salvat = PlayerPrefs.GetInt("NumeroSalvataggioCorrente");;
+		Legno = PlayerPrefs.GetFloat ("Risorse" + salvat + "Legno");
+		Roccia = PlayerPrefs.GetFloat ("Risorse" + salvat + "Roccia");
+		Ferro = PlayerPrefs.GetFloat ("Risorse" + salvat + "Ferro");
+		Oro = PlayerPrefs.GetFloat ("Risorse" + salvat + "Oro");
+		Cibo = PlayerPrefs.GetFloat ("Risorse" + salvat + "Cibo");
+		Grano = PlayerPrefs.GetFloat ("Risorse" + salvat + "Grano");
+		ErbeMedicinali = PlayerPrefs.GetFloat ("Risorse" + salvat + "ErbeMedicinali");
 	}
 }
